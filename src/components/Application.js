@@ -1,26 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from 'components/Appointment'
 import "components/Appointment";
-
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 const appointments = [
   {
@@ -35,7 +18,7 @@ const appointments = [
       interviewer: {
         id: 1,
         name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
+        avatar: "https:i.imgur.com/LpaY82x.png",
       }
     }
   },
@@ -47,7 +30,7 @@ const appointments = [
       interviewer: {
         id: 2,
         name: "Tori Malcolm", 
-        avatar: "https://i.imgur.com/Nmx0Qxo.png",
+        avatar: "https:i.imgur.com/Nmx0Qxo.png",
       }
     }
   },
@@ -59,7 +42,7 @@ const appointments = [
       interviewer: {
         id: 3,
         name: "Mildred Nazir", 
-        avatar: "https://i.imgur.com/T2WwVfS.png",
+        avatar: "https:i.imgur.com/T2WwVfS.png",
       }
     }
   },
@@ -71,7 +54,7 @@ const appointments = [
       interviewer: {
         id: 4,
         name: "Cohana Roy", 
-        avatar: "https://i.imgur.com/FK8V841.jpg",
+        avatar: "https:i.imgur.com/FK8V841.jpg",
       }
     }
   },
@@ -81,24 +64,31 @@ const appointments = [
   },
 ];
 
-function renderAppointments() {
-  const addAppointments = appointments.map(appointment => {
-    return (
-      <Appointment key={appointment.id} {...appointment} />
-    );
-  });
-  return (
-    <ul>
-      {addAppointments}
-    </ul>
-  );
-}
-
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday");
+  //const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([])
+  const setDay = day => setState(state => ({ ...state, day }));
 
-  console.log(day);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+
+  useEffect(() => {
+       axios.get("http://localhost:8001/api/days")
+       .then(resp => {
+          console.log(resp)
+          setDays(() => resp.data)
+          setState(prev => ({ ...prev, days }));
+          setState(state => ({...state, days: resp.data}))
+         setDays(resp.data)
+       })
+       .catch(err => {
+         console.error(err)
+       })
+     }, []);
 
   return (
     <main className="layout">
@@ -111,9 +101,9 @@ export default function Application(props) {
 <hr className="sidebar__separator sidebar--centered" />
 <nav className="sidebar__menu">
 <DayList
-  days={days}
-  value={day}
-  onChange={setDay}
+  days={state.days}
+  day={state.day}
+  setDay={setDay}
 />
 </nav>
 <img

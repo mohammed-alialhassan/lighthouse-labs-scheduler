@@ -6,6 +6,19 @@ export default function Form(props) {
     const [student, setStudent] = useState(props.student || "");
     const [interviewer, setInterviewer] = useState(null);
   
+    const reset = function() {
+      setStudent("");
+      setInterviewer(null);
+    }
+  
+    const cancel = function() {
+      reset();
+      props.onCancel();
+    }
+  
+    const save = () => {
+      props.onSave(student, interviewer);
+    };
   
   return (
     <main className="appointment__card appointment__card--create">

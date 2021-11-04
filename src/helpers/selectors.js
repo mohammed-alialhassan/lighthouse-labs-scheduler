@@ -32,3 +32,23 @@ export function getInterview(state, day) {
   }
 
 }
+
+export function getInterviewersForDay(state, day) {
+  let filteredDays = state.days.filter(stateDay => day === stateDay.name);  
+  if (!(filteredDays !== [] && day && filteredDays[0])) {
+    return [];
+  }  
+  const { appointments } = filteredDays[0];
+  const interviewers = [];
+  
+  for (let appointment of Object.values(state.appointments)) {
+    // let stateAppts = state.appointments[appointment];
+    if (!appointments.includes(appointment.id) && appointment.interview) {
+      let interviewer = appointment.interview.interviewer.toString();
+      if (!interviewers.includes(state.interviewers[interviewer])) {
+        interviewers.push(state.interviewers[interviewer]);
+      }
+    }
+  }
+  return interviewers;
+}

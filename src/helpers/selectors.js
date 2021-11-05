@@ -1,54 +1,38 @@
 export function getAppointmentsForDay(state, day) {
+  if (state.days.length < 1) return [];
+  
+  const filteredDay = state.days.find((d) => d.name === day);
+  if (!filteredDay) return [];
 
-  let filteredDays = state.days.filter(thisDay => thisDay.name === day);
-
-  if (filteredDays === [] || !day || filteredDays[0] === undefined) {
-    return []
+  const currentDayAppoinments = [];
+  for (const elem of filteredDay.appointments) {
+    currentDayAppoinments.push(state.appointments[elem]);
   }
-
-  const { appointments } = filteredDays[0]
-
-  const answer = []
-
-  for (let appointment of Object.values(state.appointments)) {
-    if (appointments.includes(appointment.id)) {
-      answer.push(appointment)
-    }
-  }
-
-  return answer;
-}
-
-
-export function getInterview(state, day) {
-
-  if (!day || !day.interviewer) {
-    return null
-  } else {
-    return {
-    ...day,
-    interviewer: state.interviewers[day.interviewer],
-  }
-  }
-
+  return currentDayAppoinments;
 }
 
 export function getInterviewersForDay(state, day) {
-  let filteredDays = state.days.filter(stateDay => day === stateDay.name);  
-  if (!(filteredDays !== [] && day && filteredDays[0])) {
-    return [];
-  }  
-  const { appointments } = filteredDays[0];
-  const interviewers = [];
+  if (state.days.length < 1) return [];
   
-  for (let appointment of Object.values(state.appointments)) {
-    // let stateAppts = state.appointments[appointment];
-    if (!appointments.includes(appointment.id) && appointment.interview) {
-      let interviewer = appointment.interview.interviewer.toString();
-      if (!interviewers.includes(state.interviewers[interviewer])) {
-        interviewers.push(state.interviewers[interviewer]);
-      }
-    }
+  const filteredDay = state.days.find((d) => d.name === day);
+  if (!filteredDay) return [];
+
+  const currentDayInterviewers = [];
+  for (const elem of filteredDay.interviewers) {
+    currentDayInterviewers.push(state.interviewers[elem]);
   }
-  return interviewers;
+  return currentDayInterviewers;
+}
+
+export function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  }
+  const interviewerId = interview.interviewer;
+  
+  const result = {
+    student: interview.student,
+    interviewer: state.interviewers[interviewerId]
+  }
+  return result;
 }

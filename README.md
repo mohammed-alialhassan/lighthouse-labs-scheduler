@@ -21,3 +21,14 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Screenshots
+
+![Initial Page of App](https://github.com/mohammed-alialhassan/lighthouse-labs-scheduler/blob/master/docs/homescreen.png?raw=true)
+
+![Adding a new appointment to the scheduler](https://github.com/mohammed-alialhassan/lighthouse-labs-scheduler/blob/master/docs/adding-appointment.png?raw=true)
+
+![Example of an added appoinment](https://github.com/mohammed-alialhassan/lighthouse-labs-scheduler/blob/master/docs/added-appointment.png?raw=true)
+
+![Deleting an appointment](https://github.com/mohammed-alialhassan/lighthouse-labs-scheduler/blob/master/docs/deleting-appointment.png?raw=true)
+

@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+Hello! I hope you're having a good day! This is an interview scheduler that will allow you to create, edit, and delete appointments for students and interviewers. The number of spots remaining per day correlate to the number of appointments already book and this app was made around React. Enjoy!
+
 ## Setup
 
 Install dependencies with `npm install`.

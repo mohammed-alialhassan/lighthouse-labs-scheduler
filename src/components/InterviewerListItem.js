@@ -8,7 +8,6 @@ export default function InterviewListItem(props) {
   });
   return (
     <li
-      id={props.id}
       className={interviewerClass}
       onClick={props.setInterviewer}
     >
